@@ -1,0 +1,22 @@
+<div class="container">
+
+  <img class="logo" src="assets/LILEE-logo-color-version.svg" alt="LILEF Systems" />
+
+  <span class="title">Vehicle Management System</span>
+
+  <form [formGroup]="loginForm">
+    <div class="card">
+      <span class="p-input-icon-left">
+        <i class="pi pi-user"></i>
+        <input type="text" pInputText formControlName="account" />
+      </span>
+      <span class="p-input-icon-left">
+        <i class="pi pi-lock"></i>
+        <input type="password" pInputText autocomplete="off" formControlName="password" />
+      </span>
+    </div>
+    <p-button [style]="{'width':'30vw','margin-top': '5vh'}" label="Submit" (click)="onSubmit()"></p-button>
+  </form>
+
+  <p-messages></p-messages>
+</div>
