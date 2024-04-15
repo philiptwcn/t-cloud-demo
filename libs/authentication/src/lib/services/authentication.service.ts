@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthenticationService {
   /**
    * Login with params and save random UUID in session storage
    *
+   * @param {string} storageKey
    * @param {string} account
    * @param {string} password
    * @return {*}  {boolean}
-   * @memberof AuthService
+   * @memberof AuthenticationService
    */
-  login(account: string, password: string): boolean {
+  login(storageKey: string, account: string, password: string): boolean {
     const isLoginSuccess = account === 'admin' && password === 'admin';
     if (isLoginSuccess) {
-      sessionStorage.setItem(environment.storageKey, crypto.randomUUID());
+      sessionStorage.setItem(storageKey, crypto.randomUUID());
     }
 
     return isLoginSuccess;
@@ -25,11 +25,12 @@ export class AuthService {
   /**
    * Logout and clear UUID in session storage
    *
+   * @param {string} storageKey
    * @return {*}  {boolean}
-   * @memberof AuthService
+   * @memberof AuthenticationService
    */
-  logout(): boolean {
-    sessionStorage.removeItem(environment.storageKey);
+  logout(storageKey: string): boolean {
+    sessionStorage.removeItem(storageKey);
     return true;
   }
 }
