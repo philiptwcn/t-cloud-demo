@@ -1,0 +1,32 @@
+.menubar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  height: 100vh;
+  width: fit-content;
+  border-right: 1px solid lightgray;
+  &-body{
+    display: flex;
+    flex-direction: column;
+
+    &-top {
+      display: flex;
+      align-items: baseline;
+      margin-bottom: 2rem;
+
+      &-logo {
+        height: 5vh;
+      }
+
+      &-title {
+        font-size: 2rem;
+        margin-left: 1rem;
+      }
+    }
+
+    &-button{
+      border-radius: .25rem;
+    }
+  }
+}
