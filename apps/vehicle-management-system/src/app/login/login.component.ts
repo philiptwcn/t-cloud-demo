@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
 import { AuthenticationService } from '@tcloud/auth';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,7 @@ import { environment } from '../../environments/environment';
 export class LoginComponent {
   constructor(
     private _formBuilder: FormBuilder,
+    private router: Router,
     private authService: AuthenticationService,
     private messageService: MessageService
   ) {}
@@ -43,11 +45,14 @@ export class LoginComponent {
   onSubmit() {
     // Perform login logic here
     if (this.loginForm.valid) {
-      this.authService.login(
+      const loginSuccess = this.authService.login(
         environment.storageKey,
         this.loginForm.controls.account.value ?? '',
         this.loginForm.controls.password.value ?? ''
       );
+      if (loginSuccess) {
+        this.router.navigate(['/dashboard']);
+      }
     } else {
       // Clear all former messages and display an error message
       this.messageService.clear();

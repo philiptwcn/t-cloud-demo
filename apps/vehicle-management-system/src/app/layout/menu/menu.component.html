@@ -1,0 +1,18 @@
+<div class="menubar">
+  <div class="menubar-body">
+    <div class="menubar-body-top">
+      <img class="menubar-body-top-logo" src="assets/LILEE-logo-color-version.svg" alt="LILEE Systems" />
+      <span class="menubar-body-top-title">SafeRide</span>
+    </div>
+    <div class="menubar-body-button" *ngFor="let item of items" [style]="{'width': '100%'}"
+      [ngStyle]="{'background-color': item.activated?'#f0f6ff':'transparent'}">
+      <p-button [label]="item.label" [icon]="item.icon" [text]="true"
+        [severity]="item.activated?'null':'secondary'"></p-button>
+    </div>
+
+  </div>
+  <div class="menubar-bottom">
+
+    <p-button label="logout" icon="pi pi-user" text="true" severity="secondary"></p-button>
+  </div>
+</div>
