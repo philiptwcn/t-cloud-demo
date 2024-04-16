@@ -51,7 +51,7 @@ export class LoginComponent {
         this.loginForm.controls.password.value ?? ''
       );
       if (loginSuccess) {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard/driver']);
       }
     } else {
       // Clear all former messages and display an error message

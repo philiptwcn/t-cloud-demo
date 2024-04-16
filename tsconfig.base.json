@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@tcloud/api": ["libs/api/src/index.ts"],
       "@tcloud/auth": ["libs/authentication/src/index.ts"]
     }
   },
