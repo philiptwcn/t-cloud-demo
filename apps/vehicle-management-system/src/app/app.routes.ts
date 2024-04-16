@@ -28,6 +28,13 @@ export const appRoutes: Route[] = [
                 (m) => m.VehicleComponent
               ),
           },
+          {
+            path: 'report',
+            loadComponent: () =>
+              import('./report/report.component').then(
+                (m) => m.ReportComponent
+              ),
+          },
           { path: '', redirectTo: 'driver', pathMatch: 'full' },
         ],
       },
