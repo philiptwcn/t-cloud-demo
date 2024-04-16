@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DriverComponent } from './driver.component';
-import { importProvidersFrom } from '@angular/core';
+import { VehicleComponent } from './vehicle.component';
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
+import { importProvidersFrom } from '@angular/core';
 
-describe('DriverComponent', () => {
-  let component: DriverComponent;
-  let fixture: ComponentFixture<DriverComponent>;
+describe('VehicleComponent', () => {
+  let component: VehicleComponent;
+  let fixture: ComponentFixture<VehicleComponent>;
 
   beforeEach(async () => {
     const dbConfig: DBConfig = {
@@ -34,11 +34,11 @@ describe('DriverComponent', () => {
       ],
     };
     await TestBed.configureTestingModule({
-      imports: [DriverComponent],
+      imports: [VehicleComponent],
       providers: [importProvidersFrom(NgxIndexedDBModule.forRoot(dbConfig))],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DriverComponent);
+    fixture = TestBed.createComponent(VehicleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

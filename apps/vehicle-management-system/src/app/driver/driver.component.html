@@ -47,28 +47,28 @@
 <p-dialog [(visible)]="visible">
   <ng-template pTemplate="headless">
     <form class="dialog-form" [formGroup]="createDriverForm">
-      <div class="flex flex-column gap-2">
+      <div>
         <label for="userName">Username</label>
         <span class="p-input-icon-left">
           <i class="pi pi-user"></i>
           <input type="text" id="username" pInputText formControlName="userName" />
         </span>
       </div>
-      <div class="flex flex-column gap-2">
+      <div>
         <label for="name">Name</label>
         <span class="p-input-icon-left">
           <i class="pi pi-id-card"></i>
           <input type="text" id="name" pInputText formControlName="name" />
         </span>
       </div>
-      <div class="flex flex-column gap-2">
+      <div>
         <label for="age">Age</label>
         <span class="p-input-icon-left">
           <i class="pi pi-clock"></i>
           <input type="number" id="age" pInputText formControlName="age" />
         </span>
       </div>
-      <div class="flex flex-column gap-2">
+      <div>
         <label for="gender">Gender</label>
         <span class="p-input-icon-left">
           <i class="pi pi-hashtag"></i>

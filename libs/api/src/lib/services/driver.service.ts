@@ -11,12 +11,12 @@ export class DriverService {
 
   constructor(private dbService: NgxIndexedDBService) {}
 
-  getAllDriver() {
-    return this.dbService.getAll<Driver>(this.storeName).pipe(
-      tap((drivers) => {
-        console.log(drivers);
-      })
-    );
+  getAllDrivers() {
+    return this.dbService.getAll<Driver>(this.storeName);
+  }
+
+  getDriverById(id: string) {
+    return this.dbService.getByID(this.storeName, id);
   }
 
   createDriver(driver: Driver) {

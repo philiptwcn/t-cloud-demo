@@ -7,12 +7,12 @@
     <div class="menubar-body-button" *ngFor="let item of items" [style]="{'width': '100%'}"
       [ngStyle]="{'background-color': item.activated?'#f0f6ff':'transparent'}">
       <p-button [label]="item.label" [icon]="item.icon" [text]="true"
-        [severity]="item.activated?'null':'secondary'"></p-button>
+        [severity]="item.activated?'null':'secondary'" (onClick)="navigate(item.route)" ></p-button>
     </div>
 
   </div>
   <div class="menubar-bottom">
 
-    <p-button label="logout" icon="pi pi-user" text="true" severity="secondary"></p-button>
+    <p-button label="logout" icon="pi pi-user" text="true" severity="secondary" (onClick)="logout()"></p-button>
   </div>
 </div>

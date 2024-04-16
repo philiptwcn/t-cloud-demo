@@ -1,0 +1,67 @@
+<span class="title">Vehicles</span>
+<p-table #vehicleTable class="table" [value]="vehicles" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+  [tableStyle]="{ 'width': '80vw' }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowsPerPageOptions]="[5, 10, 20]" [globalFilterFields]="['name']">
+  <ng-template pTemplate="caption">
+    <div class="table-caption">
+      <div class="table-caption-utils">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="filter(vehicleTable,$event)" placeholder="Serach name" />
+        </span>
+        <p-button label="Create Vehicle" (onClick)="showDialog()"></p-button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr class="table-header">
+      <th pSortableColumn="id" class="table-header-cell">ID<p-sortIcon field="id"></p-sortIcon></th>
+      <th pSortableColumn="name" class="table-header-cell">Name<p-sortIcon field="name"></p-sortIcon></th>
+      <th pSortableColumn="driver" class="table-header-cell">Driver<p-sortIcon field="driver"></p-sortIcon></th>
+      <th class="table-header-cell"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-vehicle>
+    <tr>
+      <td>{{ vehicle.id }}</td>
+      <td>{{ vehicle.name }}</td>
+      <td>{{ vehicle.driver }}</td>
+      <td>
+        <button pButton pRipple [text]="true" icon="pi pi-trash" severity="warning"
+          (click)="deleteVehicle(vehicle)"></button>
+      </td>
+    </tr>
+  </ng-template><ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="8">No vehicles found.</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-messages></p-messages>
+
+<p-dialog [(visible)]="visible">
+  <ng-template pTemplate="headless">
+    <form class="dialog-form" [formGroup]="createVehicleForm">
+      <div>
+        <label for="name">Name</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-id-card"></i>
+          <input type="text" id="name" pInputText formControlName="name" />
+        </span>
+      </div>
+      <div style="width:100%">
+        <label for="driver">Driver</label>
+        <p-dropdown formControlName="driver" [options]="drivers" optionLabel="name" optionValue="id"
+          [style]="{'width':'100%'}" placeholder="Select a Driver"></p-dropdown>
+      </div>
+      <div class="button-group">
+        <p-button [style]="{'margin-top': '5vh'}" label="Cancel" severity="secondary"
+          (onClick)="dismissDialog()"></p-button>
+        <p-button [style]="{'margin-top': '5vh'}" label="Create" (onClick)="createVehicle()"></p-button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>

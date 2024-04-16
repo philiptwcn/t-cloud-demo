@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Driver, DriverService } from '@tcloud/api';
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
-import { InputTextModule } from 'primeng/inputtext';
+import { Driver, DriverService, Vehicle, VehicleService } from '@tcloud/api';
 import {
   FormBuilder,
   FormControl,
@@ -11,12 +8,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
-import { finalize, tap } from 'rxjs';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { tap, finalize, switchMap, map } from 'rxjs';
+import { DropdownModule } from 'primeng/dropdown';
+
 @Component({
-  selector: 'app-driver',
+  selector: 'app-vehicle',
   standalone: true,
   imports: [
     CommonModule,
@@ -27,28 +29,30 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     TableModule,
     MessagesModule,
     ConfirmDialogModule,
+    DropdownModule,
   ],
   providers: [MessageService, ConfirmationService],
-  templateUrl: './driver.component.html',
-  styleUrl: './driver.component.scss',
+  templateUrl: './vehicle.component.html',
+  styleUrl: './vehicle.component.scss',
 })
-export class DriverComponent implements OnInit {
+export class VehicleComponent implements OnInit {
   drivers: Driver[] = [];
+  vehicles: Vehicle[] = [];
   visible = false;
-  createDriverForm = this._formBuilder.group({
-    userName: new FormControl('', Validators.required),
+  createVehicleForm = this._formBuilder.group({
     name: new FormControl('', Validators.required),
-    age: new FormControl(0, Validators.required),
-    gender: new FormControl('', Validators.required),
+    driver: new FormControl('', Validators.required),
   });
   constructor(
     private _formBuilder: FormBuilder,
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private driverService: DriverService
+    private driverService: DriverService,
+    private vehicleService: VehicleService
   ) {}
   ngOnInit(): void {
     this.getAllDrivers();
+    this.getAllVehicles();
   }
   showDialog() {
     this.visible = true;
@@ -57,22 +61,31 @@ export class DriverComponent implements OnInit {
   dismissDialog() {
     this.visible = false;
   }
-
   getAllDrivers() {
     this.driverService.getAllDrivers().subscribe((drivers) => {
       this.drivers = drivers;
     });
   }
 
-  createDriver() {
-    if (this.createDriverForm.valid) {
-      this.driverService
-        .createDriver({
+  getAllVehicles() {
+    this.vehicleService.getAllVehicles().subscribe((vehicles) => {
+      this.vehicles = vehicles.map((vehicle) => {
+        vehicle.driver =
+          this.drivers.find((driver) => driver.id === vehicle.driver)?.name ??
+          vehicle.driver;
+
+        return vehicle;
+      });
+    });
+  }
+
+  createVehicle() {
+    if (this.createVehicleForm.valid) {
+      this.vehicleService
+        .createVehicle({
           id: crypto.randomUUID(),
-          userName: this.createDriverForm.controls.userName.value ?? '',
-          name: this.createDriverForm.controls.name.value ?? '',
-          age: this.createDriverForm.controls.age.value ?? 0,
-          gender: this.createDriverForm.controls.gender.value ?? '',
+          name: this.createVehicleForm.controls.name.value ?? '',
+          driver: this.createVehicleForm.controls.driver.value ?? '',
         })
         .pipe(
           tap({
@@ -80,53 +93,53 @@ export class DriverComponent implements OnInit {
               this.messageService.add({
                 severity: 'success',
                 summary: 'Success',
-                detail: 'Create driver success.',
+                detail: 'Create vehicle success.',
                 life: 3000,
               }),
             error: () =>
               this.messageService.add({
                 severity: 'error',
                 summary: 'Failed',
-                detail: 'Create driver failed.',
+                detail: 'Create vehicle failed.',
                 life: 3000,
               }),
           }),
           finalize(() => {
             this.visible = false;
-            this.getAllDrivers();
+            this.getAllVehicles();
           })
         )
         .subscribe();
     }
   }
 
-  deleteDriver(driver: Driver) {
+  deleteVehicle(vehicle: Vehicle) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + driver.name + '?',
+      message: 'Are you sure you want to delete ' + vehicle.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.driverService
-          .deleteDriver(driver)
+        this.vehicleService
+          .deleteVehicle(vehicle)
           .pipe(
             tap({
               next: () =>
                 this.messageService.add({
                   severity: 'warn',
                   summary: 'Success',
-                  detail: 'Delete driver success.',
+                  detail: 'Delete vehicle success.',
                   life: 3000,
                 }),
               error: () =>
                 this.messageService.add({
                   severity: 'error',
                   summary: 'Failed',
-                  detail: 'Delete driver failed.',
+                  detail: 'Delete vehicle failed.',
                   life: 3000,
                 }),
             }),
             finalize(() => {
-              this.getAllDrivers();
+              this.getAllVehicles();
             })
           )
           .subscribe();
@@ -134,7 +147,7 @@ export class DriverComponent implements OnInit {
     });
   }
 
-  filter(driverTable: any, event: any) {
-    driverTable.filterGlobal(event.target.value, 'contains');
+  filter(vehicleTable: any, event: any) {
+    vehicleTable.filterGlobal(event.target.value, 'contains');
   }
 }
