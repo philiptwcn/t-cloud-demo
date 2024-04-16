@@ -1,0 +1,88 @@
+<p-table #driverTable [value]="drivers" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+  [tableStyle]="{ 'width': '80vw' }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [rowsPerPageOptions]="[5, 10, 20]" [globalFilterFields]="['name']">
+  <ng-template pTemplate="caption">
+    <div class="table-caption">
+      <span class="table-caption-description">Drivers</span>
+      <div class="table-caption-utils">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="filter(driverTable,$event)" placeholder="Global Search" />
+        </span>
+        <p-button label="Create Driver" (onClick)="showDialog()"></p-button>
+        <p-button icon="pi pi-refresh" (onClick)="getAllDrivers()"></p-button>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr class="table-header">
+      <th pSortableColumn="id" class="table-header-cell">ID<p-sortIcon field="id"></p-sortIcon></th>
+      <th pSortableColumn="userName" class="table-header-cell">Username<p-sortIcon field="userName"></p-sortIcon></th>
+      <th pSortableColumn="name" class="table-header-cell">Name<p-sortIcon field="name"></p-sortIcon></th>
+      <th pSortableColumn="age" class="table-header-cell">Age<p-sortIcon field="age"></p-sortIcon></th>
+      <th pSortableColumn="gender" class="table-header-cell">Gender<p-sortIcon field="gender"></p-sortIcon></th>
+      <th class="table-header-cell"></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-driver>
+    <tr>
+      <td>{{ driver.id }}</td>
+      <td>{{ driver.userName }}</td>
+      <td>{{ driver.name }}</td>
+      <td>{{ driver.age }}</td>
+      <td>{{ driver.gender }}</td>
+      <td>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+          (click)="deleteDriver(driver)"></button>
+      </td>
+    </tr>
+  </ng-template><ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="8">No drivers found.</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-messages></p-messages>
+
+<p-dialog [(visible)]="visible">
+  <ng-template pTemplate="headless">
+    <form class="dialog-form" [formGroup]="createDriverForm">
+      <div class="flex flex-column gap-2">
+        <label for="userName">Username</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <input type="text" id="username" pInputText formControlName="userName" />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="name">Name</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-id-card"></i>
+          <input type="text" id="name" pInputText formControlName="name" />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="age">Age</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-clock"></i>
+          <input type="number" id="age" pInputText formControlName="age" />
+        </span>
+      </div>
+      <div class="flex flex-column gap-2">
+        <label for="gender">Gender</label>
+        <span class="p-input-icon-left">
+          <i class="pi pi-hashtag"></i>
+          <input type="text" id="gender" pInputText formControlName="gender" />
+        </span>
+      </div>
+      <div class="button-group">
+        <p-button [style]="{'margin-top': '5vh'}" label="Cancel" severity="secondary"
+          (onClick)="dismissDialog()"></p-button>
+        <p-button [style]="{'margin-top': '5vh'}" label="Create" (onClick)="createDriver()"></p-button>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog></p-confirmDialog>
