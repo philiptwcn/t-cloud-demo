@@ -15,6 +15,13 @@ const dbConfig: DBConfig = {
         { name: 'userName', keypath: 'userName', options: { unique: true } },
       ],
     },
+    {
+      store: 'vehicles',
+      storeConfig: { keyPath: 'id', autoIncrement: false },
+      storeSchema: [
+        { name: 'name', keypath: 'name', options: { unique: false } },
+      ],
+    },
   ],
 };
 
