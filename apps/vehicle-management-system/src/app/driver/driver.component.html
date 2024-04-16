@@ -1,16 +1,15 @@
-<p-table #driverTable [value]="drivers" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+<span class="title">Drivers</span>
+<p-table #driverTable class="table" [value]="drivers" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
   [tableStyle]="{ 'width': '80vw' }" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
   [rowsPerPageOptions]="[5, 10, 20]" [globalFilterFields]="['name']">
   <ng-template pTemplate="caption">
     <div class="table-caption">
-      <span class="table-caption-description">Drivers</span>
       <div class="table-caption-utils">
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
-          <input pInputText type="text" (input)="filter(driverTable,$event)" placeholder="Global Search" />
+          <input pInputText type="text" (input)="filter(driverTable,$event)" placeholder="Serach name" />
         </span>
         <p-button label="Create Driver" (onClick)="showDialog()"></p-button>
-        <p-button icon="pi pi-refresh" (onClick)="getAllDrivers()"></p-button>
       </div>
     </div>
   </ng-template>
@@ -32,7 +31,7 @@
       <td>{{ driver.age }}</td>
       <td>{{ driver.gender }}</td>
       <td>
-        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+        <button pButton pRipple [text]="true" icon="pi pi-trash" severity="warning"
           (click)="deleteDriver(driver)"></button>
       </td>
     </tr>

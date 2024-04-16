@@ -1,4 +1,10 @@
 .horizontal-wrapper{
   display: flex;
   height: 100vh;
+
+  .area{
+    &-right{
+      padding: 2rem;
+    }
+  }
 }
