@@ -4,7 +4,7 @@
 
   <span class="title">Vehicle Management System</span>
 
-  <form [formGroup]="loginForm">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div class="card">
       <span class="p-input-icon-left">
         <i class="pi pi-user"></i>
@@ -15,7 +15,8 @@
         <input type="password" pInputText autocomplete="off" formControlName="password" />
       </span>
     </div>
-    <p-button [style]="{'width':'30vw','margin-top': '5vh'}" label="Submit" (click)="onSubmit()"></p-button>
+    <p-button type="submit" [disabled]="!loginForm.valid" label="Submit"
+      [style]="{'width':'30vw','margin-top': '5vh'}"></p-button>
   </form>
 
   <p-messages></p-messages>

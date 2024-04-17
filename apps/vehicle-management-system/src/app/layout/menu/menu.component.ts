@@ -1,5 +1,5 @@
 import { environment } from './../../../environments/environment.development';
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { AuthenticationService } from '@tcloud/auth';
@@ -19,17 +19,7 @@ interface MenuItem {
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
 })
-export class MenuComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private authService: AuthenticationService
-  ) {}
-  ngOnInit(): void {
-    this.route.url.subscribe((value) => {
-      console.log(value[value.length - 1]);
-    });
-  }
+export class MenuComponent implements AfterContentChecked {
   items: MenuItem[] = [
     {
       label: 'Driver',
@@ -50,6 +40,20 @@ export class MenuComponent implements OnInit {
       route: 'report',
     },
   ];
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthenticationService
+  ) {}
+
+  ngAfterContentChecked(): void {
+    this.items.map(
+      (item) =>
+        (item.activated =
+          this.router.url.split('/').pop() === item.route ? true : false)
+    );
+  }
 
   navigate(link: string) {
     this.router.navigate([link], { relativeTo: this.route });
