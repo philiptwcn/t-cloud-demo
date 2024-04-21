@@ -42,7 +42,7 @@ export class LoginComponent {
     password: new FormControl('', Validators.required),
   });
 
-  onSubmit() {
+  onSubmit(): void {
     // Perform login logic here
     if (this.loginForm.valid) {
       const loginSuccess = this.authService.login(
