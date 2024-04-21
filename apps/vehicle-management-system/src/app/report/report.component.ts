@@ -19,7 +19,7 @@ export class ReportComponent implements OnInit {
   pieOptions: any;
 
   constructor(private driverService: DriverService) {}
-  ngOnInit() {
+  ngOnInit(): void {
     this.driverService.getAllDrivers().subscribe((drivers) => {
       this.drivers = drivers;
       const documentStyle = getComputedStyle(document.documentElement);
@@ -119,7 +119,7 @@ export class ReportComponent implements OnInit {
       };
     });
   }
-  getAllDrivers() {
+  getAllDrivers(): void {
     this.driverService.getAllDrivers().subscribe((drivers) => {
       this.drivers = drivers;
     });
