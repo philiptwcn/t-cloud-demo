@@ -54,20 +54,20 @@ export class VehicleComponent implements OnInit {
     this.getAllDrivers();
     this.getAllVehicles();
   }
-  showDialog() {
+  showDialog(): void {
     this.visible = true;
   }
 
-  dismissDialog() {
+  dismissDialog(): void {
     this.visible = false;
   }
-  getAllDrivers() {
+  getAllDrivers(): void {
     this.driverService.getAllDrivers().subscribe((drivers) => {
       this.drivers = drivers;
     });
   }
 
-  getAllVehicles() {
+  getAllVehicles(): void {
     this.vehicleService.getAllVehicles().subscribe((vehicles) => {
       this.vehicles = vehicles.map((vehicle) => {
         vehicle.driver =
@@ -79,7 +79,7 @@ export class VehicleComponent implements OnInit {
     });
   }
 
-  createVehicle() {
+  createVehicle(): void {
     if (this.createVehicleForm.valid) {
       this.vehicleService
         .createVehicle({
@@ -113,7 +113,7 @@ export class VehicleComponent implements OnInit {
     }
   }
 
-  deleteVehicle(vehicle: Vehicle) {
+  deleteVehicle(vehicle: Vehicle): void {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + vehicle.name + '?',
       header: 'Confirm',
@@ -147,7 +147,7 @@ export class VehicleComponent implements OnInit {
     });
   }
 
-  filter(vehicleTable: any, event: any) {
+  filter(vehicleTable: any, event: any): void {
     vehicleTable.filterGlobal(event.target.value, 'contains');
   }
 }

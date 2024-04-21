@@ -50,21 +50,21 @@ export class DriverComponent implements OnInit {
   ngOnInit(): void {
     this.getAllDrivers();
   }
-  showDialog() {
+  showDialog(): void {
     this.visible = true;
   }
 
-  dismissDialog() {
+  dismissDialog(): void {
     this.visible = false;
   }
 
-  getAllDrivers() {
+  getAllDrivers(): void {
     this.driverService.getAllDrivers().subscribe((drivers) => {
       this.drivers = drivers;
     });
   }
 
-  createDriver() {
+  createDriver(): void {
     if (this.createDriverForm.valid) {
       this.driverService
         .createDriver({
@@ -100,7 +100,7 @@ export class DriverComponent implements OnInit {
     }
   }
 
-  deleteDriver(driver: Driver) {
+  deleteDriver(driver: Driver): void {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + driver.name + '?',
       header: 'Confirm',
@@ -134,7 +134,7 @@ export class DriverComponent implements OnInit {
     });
   }
 
-  filter(driverTable: any, event: any) {
+  filter(driverTable: any, event: any): void {
     driverTable.filterGlobal(event.target.value, 'contains');
   }
 }

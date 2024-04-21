@@ -3,27 +3,9 @@ import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
-const dbConfig: DBConfig = {
-  name: 'tcloud',
-  version: 1,
-  objectStoresMeta: [
-    {
-      store: 'drivers',
-      storeConfig: { keyPath: 'id', autoIncrement: false },
-      storeSchema: [
-        { name: 'name', keypath: 'name', options: { unique: false } },
-        { name: 'userName', keypath: 'userName', options: { unique: true } },
-      ],
-    },
-    {
-      store: 'vehicles',
-      storeConfig: { keyPath: 'id', autoIncrement: false },
-      storeSchema: [
-        { name: 'name', keypath: 'name', options: { unique: false } },
-      ],
-    },
-  ],
-};
+import { environment } from '../environments/environment';
+
+const dbConfig: DBConfig = environment.dbConfig;
 
 export const appConfig: ApplicationConfig = {
   providers: [

@@ -55,11 +55,23 @@ export class MenuComponent implements AfterContentChecked {
     );
   }
 
-  navigate(link: string) {
+  /**
+   * Navigate by clicked link
+   *
+   * @param {string} link
+   * @memberof MenuComponent
+   */
+  navigate(link: string): void {
     this.router.navigate([link], { relativeTo: this.route });
   }
 
-  logout() {
+  /**
+   * Logout
+   * Clear stored key and navigate to login page
+   *
+   * @memberof MenuComponent
+   */
+  logout(): void {
     this.authService.logout(environment.storageKey);
     this.router.navigate(['login']);
   }
